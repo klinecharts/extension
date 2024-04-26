@@ -1,0 +1,51 @@
+{
+  "name": "@klinecharts/extension",
+  "version": "0.0.1",
+  "description": "KLineChart extension.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/klinecharts/extension"
+  },
+  "bugs": {
+    "url": "https://github.com/klinecharts/extension/issues"
+  },
+  "keywords": [
+    "klinecharts",
+    "extension",
+    "indicator",
+    "overlay"
+  ],
+  "author": "liihuu",
+  "license": "Apache-2.0",
+  "private": false, 
+  "scripts": {
+    "lint": "eslint lint",
+    "build": "rollup -c rollup.config.js",
+    "prepare": "husky"
+  },
+  "peerDependencies": {
+    "klinecharts": "9.0.0+"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "eslint": "^8.57.0",
+    "eslint-config-love": "^47.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "glob": "^10.3.12",
+    "rollup": "^4.16.4",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5",
+    "@rollup/plugin-eslint": "^9.0.5",
+    "husky": "^9.0.11"
+  }
+}
