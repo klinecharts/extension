@@ -3,7 +3,6 @@ import { type BuildConfig, build, Glob, write } from 'bun'
 
 const outdir = 'dist'
 const publicEntries = [
-  { name: 'volume', path: 'indicators/volume' },
   { name: 'abcd', path: 'overlays/abcd' },
   { name: 'anyWaves', path: 'overlays/anyWaves' },
   { name: 'arrow', path: 'overlays/arrow' },
