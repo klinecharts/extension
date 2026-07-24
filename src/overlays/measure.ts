@@ -14,8 +14,6 @@
 
 import { type OverlayFigure, type OverlayTemplate, utils } from 'klinecharts'
 
-const hasAtLeastTwoItems = <T>(items: T[]): items is [T, T, ...T[]] => items.length > 1
-
 const measure: OverlayTemplate = {
   name: 'measure',
   totalStep: 3,
@@ -28,7 +26,7 @@ const measure: OverlayTemplate = {
     lineColor: '#1677FF'
   },
   createPointFigures: ({ coordinates, overlay, bounding }) => {
-    if (hasAtLeastTwoItems(coordinates)) {
+    if (coordinates.length > 1) {
       const leftToRight = coordinates[0].x < coordinates[1].x
       const topToBottom = coordinates[0].y < coordinates[1].y
       const centerCoordinate = {

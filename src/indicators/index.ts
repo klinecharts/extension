@@ -12,11 +12,4 @@
  * limitations under the License.
  */
 
-import type { IndicatorTemplate } from 'klinecharts'
-
-const volume: IndicatorTemplate = {
-  name: 'Volume',
-  calc: () => []
-}
-
-export default volume
+export {}

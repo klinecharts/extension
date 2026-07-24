@@ -2,6 +2,27 @@ import { rm } from 'node:fs/promises'
 import { type BuildConfig, build, Glob, write } from 'bun'
 
 const outdir = 'dist'
+const publicEntries = [
+  { name: 'volume', path: 'indicators/volume' },
+  { name: 'abcd', path: 'overlays/abcd' },
+  { name: 'anyWaves', path: 'overlays/anyWaves' },
+  { name: 'arrow', path: 'overlays/arrow' },
+  { name: 'circle', path: 'overlays/circle' },
+  { name: 'eightWaves', path: 'overlays/eightWaves' },
+  { name: 'fibonacciCircle', path: 'overlays/fibonacciCircle' },
+  { name: 'fibonacciExtension', path: 'overlays/fibonacciExtension' },
+  { name: 'fibonacciSegment', path: 'overlays/fibonacciSegment' },
+  { name: 'fibonacciSpeedResistanceFan', path: 'overlays/fibonacciSpeedResistanceFan' },
+  { name: 'fibonacciSpiral', path: 'overlays/fibonacciSpiral' },
+  { name: 'fiveWaves', path: 'overlays/fiveWaves' },
+  { name: 'gannBox', path: 'overlays/gannBox' },
+  { name: 'measure', path: 'overlays/measure' },
+  { name: 'parallelogram', path: 'overlays/parallelogram' },
+  { name: 'rect', path: 'overlays/rect' },
+  { name: 'threeWaves', path: 'overlays/threeWaves' },
+  { name: 'triangle', path: 'overlays/triangle' },
+  { name: 'xabcd', path: 'overlays/xabcd' }
+] as const
 const entrypoints = Array.from(
   new Glob('**/*.ts').scanSync({
     absolute: true,
@@ -46,6 +67,6 @@ if (failedResults.length > 0) {
 }
 
 await Promise.all([
-  write(`${outdir}/index.js`, `export { default as volume } from './indicators/volume.js'\nexport { default as measure } from './overlays/measure.js'\n`),
-  write(`${outdir}/index.cjs`, `'use strict'\n\nmodule.exports = {\n  volume: require('./indicators/volume.cjs').default,\n  measure: require('./overlays/measure.cjs').default\n}\n`)
+  write(`${outdir}/index.js`, `${publicEntries.map(({ name, path }) => `export { default as ${name} } from './${path}.js'`).join('\n')}\n`),
+  write(`${outdir}/index.cjs`, `'use strict'\n\nmodule.exports = {\n${publicEntries.map(({ name, path }) => `  ${name}: require('./${path}.cjs').default`).join(',\n')}\n}\n`)
 ])

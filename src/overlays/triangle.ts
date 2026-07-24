@@ -12,5 +12,26 @@
  * limitations under the License.
  */
 
-export * from './indicators/index'
-export * from './overlays/index'
+import type { OverlayTemplate } from 'klinecharts'
+
+const triangle: OverlayTemplate = {
+  name: 'triangle',
+  totalStep: 4,
+  needDefaultPointFigure: true,
+  needDefaultXAxisFigure: true,
+  needDefaultYAxisFigure: true,
+  styles: {
+    polygon: {
+      color: 'rgba(22, 119, 255, 0.15)'
+    }
+  },
+  createPointFigures: ({ coordinates }) => [
+    {
+      type: 'polygon',
+      attrs: { coordinates },
+      styles: { style: 'stroke_fill' }
+    }
+  ]
+}
+
+export default triangle
