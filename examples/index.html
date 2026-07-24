@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Interactive overlay debugger for @klinecharts/extension" />
+    <title>KLineChart Extension Lab</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar">
+        <header class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div>
+            <p class="eyebrow">KLineChart</p>
+            <h1>Extension Lab</h1>
+          </div>
+        </header>
+
+        <section class="intro" aria-labelledby="tools-title">
+          <div>
+            <p class="eyebrow">Overlay debugger</p>
+            <h2 id="tools-title">Drawing tools</h2>
+          </div>
+          <span class="tool-count" id="tool-count">18 tools</span>
+        </section>
+
+        <div class="tool-groups" id="tool-groups"></div>
+
+        <footer class="sidebar-footer">
+          <p><kbd>Esc</kbd> cancel current drawing</p>
+          <p>Drag the chart to pan · scroll to zoom</p>
+        </footer>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div class="market">
+            <span class="market-icon">K</span>
+            <div>
+              <strong>KLINE / USD</strong>
+              <span>1D · simulated data</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="action-button" id="reset-view" title="Return to the latest candle">
+              <span aria-hidden="true">↦</span>
+              Latest
+            </button>
+            <button type="button" class="action-button danger" id="clear-overlays" title="Remove every overlay">
+              <span aria-hidden="true">×</span>
+              Clear
+            </button>
+            <button type="button" class="icon-button" id="theme-toggle" aria-label="Switch to light theme" title="Toggle theme">
+              <span class="theme-icon" aria-hidden="true">☼</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="chart-stage">
+          <div class="chart" id="chart" aria-label="Candlestick chart drawing area"></div>
+
+          <div class="status-card" id="status-card" aria-live="polite">
+            <span class="status-dot"></span>
+            <div>
+              <strong id="status-title">Ready to draw</strong>
+              <span id="status-detail">Choose an overlay from the tool panel</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./index.ts"></script>
+  </body>
+</html>

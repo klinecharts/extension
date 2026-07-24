@@ -1,6 +1,6 @@
 # @klinecharts/extension
 
-Indicators and overlays for [KLineChart](https://github.com/klinecharts/KLineChart).
+Indicator and overlay extension for [KLineChart](https://github.com/klinecharts/KLineChart).
 
 The package provides reusable overlay templates without registering them globally. Import only the tools you need, register them with KLineChart, and then create overlays by name.
 
@@ -109,10 +109,12 @@ chart?.createOverlay({
 
 ```bash
 bun install
+bun run dev
 bun run check
 bun run build
 ```
 
+- `bun run dev` opens the interactive overlay debugger at `http://localhost:3000`.
 - `bun run check` runs formatting, linting, and TypeScript checks.
 - `bun run build` creates ESM, CommonJS, and declaration files in `dist`.
 
