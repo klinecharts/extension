@@ -12,7 +12,9 @@
  * limitations under the License.
  */
 
-import { utils, type OverlayTemplate, type OverlayFigure } from 'klinecharts'
+import { type OverlayFigure, type OverlayTemplate, utils } from 'klinecharts'
+
+const hasAtLeastTwoItems = <T>(items: T[]): items is [T, T, ...T[]] => items.length > 1
 
 const measure: OverlayTemplate = {
   name: 'measure',
@@ -26,7 +28,7 @@ const measure: OverlayTemplate = {
     lineColor: '#1677FF'
   },
   createPointFigures: ({ coordinates, overlay, bounding }) => {
-    if (coordinates.length > 1) {
+    if (hasAtLeastTwoItems(coordinates)) {
       const leftToRight = coordinates[0].x < coordinates[1].x
       const topToBottom = coordinates[0].y < coordinates[1].y
       const centerCoordinate = {
@@ -37,17 +39,13 @@ const measure: OverlayTemplate = {
       const backgroundColor = overlay.styles?.backgroundColor
       const tipBackgroundColor = overlay.styles?.tipBackgroundColor
       const lineColor = overlay.styles?.lineColor
-      const texts = overlay.extendData?.(overlay.points) ?? []
+      const extendData = overlay.extendData as ((points: typeof overlay.points) => string[]) | undefined
+      const texts = extendData?.(overlay.points) ?? []
       const figures: OverlayFigure[] = [
         {
           type: 'polygon',
           attrs: {
-            coordinates: [
-              coordinates[0],
-              { x: coordinates[1].x, y: coordinates[0].y },
-              coordinates[1],
-              { x: coordinates[0].x, y: coordinates[1].y }
-            ]
+            coordinates: [coordinates[0], { x: coordinates[1].x, y: coordinates[0].y }, coordinates[1], { x: coordinates[0].x, y: coordinates[1].y }]
           },
           styles: {
             color: backgroundColor
@@ -56,7 +54,10 @@ const measure: OverlayTemplate = {
         {
           type: 'line',
           attrs: {
-            coordinates: [{ x: coordinates[0].x, y: centerCoordinate.y }, { x: coordinates[1].x, y: centerCoordinate.y }]
+            coordinates: [
+              { x: coordinates[0].x, y: centerCoordinate.y },
+              { x: coordinates[1].x, y: centerCoordinate.y }
+            ]
           },
           styles: {
             color: lineColor
@@ -65,7 +66,10 @@ const measure: OverlayTemplate = {
         {
           type: 'line',
           attrs: {
-            coordinates: [{ x: centerCoordinate.x, y: coordinates[0].y }, { x: centerCoordinate.x, y: coordinates[1].y }]
+            coordinates: [
+              { x: centerCoordinate.x, y: coordinates[0].y },
+              { x: centerCoordinate.x, y: coordinates[1].y }
+            ]
           },
           styles: {
             color: lineColor
@@ -135,12 +139,10 @@ const measure: OverlayTemplate = {
         let y
         let width = 0
         const height = length * 12 + (length - 1) * textGap + verticalPadding * 2
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
         texts.forEach((text) => {
-          width = Math.max(utils.calcTextWidth(text as string), width)
+          width = Math.max(utils.calcTextWidth(text), width)
         })
-        width += (horizontalPadding * 2)
+        width += horizontalPadding * 2
         if (topToBottom) {
           if (coordinates[1].y + tipGap + height > bounding.height) {
             y = bounding.height - height
@@ -170,9 +172,7 @@ const measure: OverlayTemplate = {
         })
 
         let textY = y + verticalPadding
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        texts.forEach(text => {
+        texts.forEach((text) => {
           figures.push({
             type: 'text',
             attrs: {
@@ -189,7 +189,7 @@ const measure: OverlayTemplate = {
               backgroundColor: 'none'
             }
           })
-          textY += (12 + textGap)
+          textY += 12 + textGap
         })
       }
       return figures

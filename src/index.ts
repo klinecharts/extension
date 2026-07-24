@@ -12,8 +12,5 @@
  * limitations under the License.
  */
 
-import volume from './indicators/volume'
-
-export {
-  volume
-}
+export { default as volume } from './indicators/volume'
+export { default as measure } from './overlays/measure'
